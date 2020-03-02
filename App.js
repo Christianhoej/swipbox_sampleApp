@@ -21,16 +21,16 @@ import Finish from './app/components/Finish';
 const RootStack = createStackNavigator({
     Connection: Connection,
     Operation: Operation,
-    Test: TestFunctions,
     Pickup: Pickup,
+    Closing: Closing,
     Finish: Finish,
     Deliver: Deliver,
-    Closing: Closing,
+    Test: TestFunctions,
     Home: Home
 
   },
   {
-    initialRouteName: 'Pickup',
+    initialRouteName: 'Operation',
   }
 );
 

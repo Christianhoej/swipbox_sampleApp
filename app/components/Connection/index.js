@@ -115,7 +115,7 @@ export default class Connection extends Component {
                         multiline={true}
                         ref={input => this.textInputUUID = input}
                         //value="00000000-4281-4e45-0039-50130000003c"
-                        //value="00000000-4462-4e45-0028-901000000042"
+                        value="00000000-4462-4e45-0028-901000000042"
                         //value=LockerManager.
                     />
                     <Button

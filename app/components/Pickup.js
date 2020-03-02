@@ -168,6 +168,9 @@ export default class Pickup extends Component {
 
                     console.log('uid: ' + event.uid + ', compartmentId: ' + event.compartmentId + ', compartmentState: ' + event.compartmentState);
                     ToastAndroid.show("Compartment id " + event.compartmentId + (event.compartmentState == 1 ? " opened" : " closed"), ToastAndroid.LONG);
+                    if(event.compartmentState == 1){
+                    navigation.navigate('Closing')
+                    }
                 });
 
             statusAvailableListener = eventEmitter.addListener('onStatusAvailable', (event) => {
@@ -265,6 +268,10 @@ export default class Pickup extends Component {
             LockerManager.disconnect(UUID);
         }
 
+        toClosing() {
+            this.props.navigation.replace('Closing')
+        }
+
     render() {
        return (
        <ScrollView
@@ -296,7 +303,7 @@ export default class Pickup extends Component {
                                <Button
                                    title="Annuller"
 
-                                   onPress={() => navigation.replace('Home')}
+                                   onPress={() => this.props.navigation.replace('Closing')}
                                    />
 
                            </View>

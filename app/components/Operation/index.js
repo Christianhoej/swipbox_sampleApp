@@ -157,10 +157,11 @@ export default class Operation extends Component {
     }
 
     getData() {
-        LockerManager.getData(UUID);
+        /*LockerManager.getData(UUID);
         this.setState({
                 loadingData: !this.state.loadingData
-            });
+            });*/
+            this.props.navigation.navigate('Pickup')
     }
 
     onAuthenticatePress() {
