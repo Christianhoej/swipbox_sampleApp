@@ -80,7 +80,7 @@ export default class Operation extends Component {
 
     componentDidMount() {
         console.log('componentDidMount');
-        
+
         BackHandler.addEventListener("hardwareBackPress", this.handleOnBackPress);
 
         const eventEmitter = new NativeEventEmitter(NativeModules.LockerManager);
@@ -201,8 +201,8 @@ export default class Operation extends Component {
                     underlineColorAndroid="black"
                     onChangeText={(text) => this.setState({authenticationToken: text})}
                     multiline={true}
-                    //value={this.state.authenticationToken}
-                    value="AEAAIABAb9wgs/va55/7hp62W29wLVPDbP8BVDPenJroDAKrpZNikKpDMBdQZaex1aAgtFuChyV28bMfg9aGuHr8fxVATHt4x79r8CAiAvJFqPPGnGSMZZTRLnK/3ihcpRt2WbZLqM1YQ0FHHCnsD1jjo4LqIfmGQx32Xsiob9xGrQkJ7Zaa8z/RhDYDo6xROaHuPAzYwJx85MJndMP4Qi4nEGRZkg=="
+                    value={this.state.authenticationToken}
+                    //value="AEAAIABAb9wgs/va55/7hp62W29wLVPDbP8BVDPenJroDAKrpZNikKpDMBdQZaex1aAgtFuChyV28bMfg9aGuHr8fxVATHt4x79r8CAiAvJFqPPGnGSMZZTRLnK/3ihcpRt2WbZLqM1YQ0FHHCnsD1jjo4LqIfmGQx32Xsiob9xGrQkJ7Zaa8z/RhDYDo6xROaHuPAzYwJx85MJndMP4Qi4nEGRZkg=="
                 />
                 <TextInput
                     style={{textAlign: 'center'}}
@@ -211,8 +211,8 @@ export default class Operation extends Component {
                     underlineColorAndroid="black"
                     onChangeText={(text) => this.setState({authenticationResponse: text})}
                     multiline={true}
-                    //value={this.state.authenticationResponse}
-                    value="TIMkaRx+8n4="
+                    value={this.state.authenticationResponse}
+                    //value="TIMkaRx+8n4="
                 />
                 <Button
                     title="Authenticate"
@@ -226,8 +226,8 @@ export default class Operation extends Component {
                     underlineColorAndroid="black"
                     onChangeText={(text) => this.setState({token: text})}
                     multiline={true}
-                    //value={this.state.token}
-                    value="AEAAIABAUdWMvVRzjJGdBoBGeKJu3K3OJn/nG6HzCwIdkuUi3dDg4oW9nl0z+5VpzA2t8KX7pIOnax4htZPda2ZUIbhTGlFPIKj0rAAaO99S9wE7WsobP298WG9MLYYxbFhk0cUbpTGsa2QWWwjgZWmyTuG8460Cc/fICCkN7gE24x5623fwQYX/y9L14oCvxlOK/DxwE5YGkm8ZHGWexf3uGpeYEg=="
+                    value={this.state.token}
+                    //value="AEAAIABAUdWMvVRzjJGdBoBGeKJu3K3OJn/nG6HzCwIdkuUi3dDg4oW9nl0z+5VpzA2t8KX7pIOnax4htZPda2ZUIbhTGlFPIKj0rAAaO99S9wE7WsobP298WG9MLYYxbFhk0cUbpTGsa2QWWwjgZWmyTuG8460Cc/fICCkN7gE24x5623fwQYX/y9L14oCvxlOK/DxwE5YGkm8ZHGWexf3uGpeYEg=="
                 />
                 <Button
                     title="Open Compartment"

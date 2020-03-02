@@ -14,6 +14,7 @@ import LockerManager from '../LockerManager'
 import {PermissionsAndroid} from 'react-native';
 
 
+
 async function requestPermissions() {
     try {
     //const granted = PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -59,7 +60,7 @@ export default class Connection extends Component {
 
         if (requestPermissions()) {
             console.log('permission granted');
-            //LockerManager.startScan();
+            LockerManager.startScan();
         }
     }
     
@@ -90,6 +91,7 @@ export default class Connection extends Component {
             //LockerManager.startScan();
             this.setState({isConnecting: true});
             LockerManager.connect(uuid);
+
         }
     }
 
@@ -112,10 +114,12 @@ export default class Connection extends Component {
                         underlineColorAndroid="black"
                         multiline={true}
                         ref={input => this.textInputUUID = input}
-                        value="00000000-4281-4e45-0039-50130000003c"
+                        //value="00000000-4281-4e45-0039-50130000003c"
+                        //value="00000000-4462-4e45-0028-901000000042"
+                        //value=LockerManager.
                     />
                     <Button
-                        title="Connect"
+                        title="Connect!"
                         onPress={this.onConnectPress}
                     /> 
                 </View>

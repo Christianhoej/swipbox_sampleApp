@@ -11,14 +11,26 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Connection from './app/components/Connection';
 import Operation from './app/components/Operation';
-
+import TestFunctions from './app/components/TestFunctions';
+import Home from './app/components/Home';
+import Pickup from './app/components/Pickup';
+import Deliver from './app/components/Deliver';
+import Closing from './app/components/Closing';
+import Finish from './app/components/Finish';
 
 const RootStack = createStackNavigator({
     Connection: Connection,
-    Operation: Operation
+    Operation: Operation,
+    Test: TestFunctions,
+    Pickup: Pickup,
+    Finish: Finish,
+    Deliver: Deliver,
+    Closing: Closing,
+    Home: Home
+
   },
   {
-    initialRouteName: 'Connection',
+    initialRouteName: 'Pickup',
   }
 );
 

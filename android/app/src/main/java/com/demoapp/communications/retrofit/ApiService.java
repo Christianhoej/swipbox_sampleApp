@@ -19,7 +19,7 @@ public interface ApiService {
             "Cache-Control: no-cache",
             "Connection: keep-alive",
             "Content-Type: application/json",
-            "Host: dev.infinity.swipbox.com",
+            "Host: test.infinity.swipbox.com",
             "Postman-Token: d29bf2d7-7725-4335-9c1b-dfe3b6db6834,801a7433-35ad-46c3-9ef7-dc9a74910cd7",
             "User-Agent: PostmanRuntime/7.20.1",
             "cache-control: no-cache",
