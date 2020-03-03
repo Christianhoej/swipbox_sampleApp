@@ -6,6 +6,11 @@
  * @flow
  */
 
+ import {
+   BackHandler,
+   ToastAndroid,
+ } from 'react-native';
+
 import React, {Component} from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -30,9 +35,34 @@ const RootStack = createStackNavigator({
 
   },
   {
-    initialRouteName: 'Operation',
+    initialRouteName: 'Home',
   }
 );
+
+var backPressedOnce = false;
+
+BackHandler.addEventListener('hardwareBackPress', function() {
+  // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+  // Typically you would use the navigator here to go to the last state.
+
+  if (backPressedOnce==true) {
+
+//    BackHandler.exitApp()
+    return false;
+  }
+  else {
+
+    backPressedOnce = true
+    ToastAndroid.show('Tryk tilbage igen for at lukke appen', ToastAndroid.SHORT);
+
+    setTimeout(function(){
+                  backPressedOnce=false}, 2000);
+    return true
+    }
+
+
+
+});
 
 const AppContainer = createAppContainer(RootStack);
 
@@ -41,3 +71,5 @@ export default class App extends Component {
     return <AppContainer />;
   }
 }
+
+

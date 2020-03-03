@@ -71,6 +71,9 @@ async function requestPermissions() {
 }
 
 let uuid = '';
+//var { startpunktVal } = route.params;
+    //var { destinationVal } = route.params;
+
 
 export default class Pickup extends Component {
     static navigationOptions = ({navigation}) => {
@@ -78,6 +81,7 @@ export default class Pickup extends Component {
             title: 'Pickup',
         }
     };
+
 
     constructor(props) {
         super(props);
@@ -103,6 +107,11 @@ export default class Pickup extends Component {
         }
 
         UUID = "00000000-4462-4E45-0028-901000000042";
+        startpunktVal = this.props.navigation.getParam('startpunktVal','');
+
+        destinationVal = this.props.navigation.getParam('destinationVal','');
+
+        closingVar = 'fromCountdown';
     }
 
     componentWillUnmount() {
@@ -279,6 +288,8 @@ export default class Pickup extends Component {
                >
 
                <View style={styles.sectionContainer}>
+                          <Text style={styles.sectionTitle}>Afhent din pakke på {startpunktVal}</Text>
+
                            <Text style={styles.sectionTitle}>Din pakke er reseveret i:</Text>
 
 
@@ -298,16 +309,14 @@ export default class Pickup extends Component {
                              </View>
 
                      <View style={styles.butttonContainer}>
-
                          <View style = {styles.button2}>
                                <Button
                                    title="Annuller"
-
-                                   onPress={() => this.props.navigation.replace('Closing')}
+                                  onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}
+                                   //onPress={() => this.props.navigation.replace('Closing')}
                                    />
 
                            </View>
-
                            <View style = {styles.button2}>
                                 <Button
                                      title="Forbind"
