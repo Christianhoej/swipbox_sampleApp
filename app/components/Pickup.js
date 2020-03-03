@@ -143,9 +143,13 @@ export default class Pickup extends Component {
             if (event.status === LockerManager.STATUS_DEVICE_CONNECTED) {
             console.log('connected');
             LockerManager.stopScan();
+
+            //setTimeout(this.getData(), 6000)
+            //setTimeout(function(){this.getData()} , 10000)
             //this.getData();
             /*if(event.uid)
             this.onAuthenticatePress();*/
+            this.getData()
             } else {
             console.log('connection failed');
             ToastAndroid.show('connection failed status code ' + event.status, ToastAndroid.SHORT);
@@ -174,11 +178,10 @@ export default class Pickup extends Component {
 
             compartmentStatusChangedListener= eventEmitter.addListener('onCompartmentStatusChanged', (event) => {
                     console.log('EVENT-compartmentStatusChangedListener');
-
                     console.log('uid: ' + event.uid + ', compartmentId: ' + event.compartmentId + ', compartmentState: ' + event.compartmentState);
                     ToastAndroid.show("Compartment id " + event.compartmentId + (event.compartmentState == 1 ? " opened" : " closed"), ToastAndroid.LONG);
                     if(event.compartmentState == 1){
-                    navigation.navigate('Closing')
+                    this.props.navigation.replace('Closing')
                     }
                 });
 
@@ -247,14 +250,16 @@ export default class Pickup extends Component {
             LockerManager.connect(uuid);
 
         }
-
     }
 
+
         getData() {
+        setTimeout(function(){
             LockerManager.getData(UUID);
-            this.setState({
+            /*this.setState({
                     loadingData: !this.state.loadingData
-                });
+                });*/
+        } , 10000)
         }
 
         onAuthenticatePress() {
