@@ -22,8 +22,9 @@ export default class Finish extends Component {
 
     static navigationOptions = ({navigation}) => {
         return {
-            title: 'Finish',
-            headerLeft: null,
+            //title: 'Finish',
+            //headerLeft: null,
+            headerShown: false,
 
         }
     };

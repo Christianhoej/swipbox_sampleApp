@@ -22,6 +22,7 @@ import Pickup from './app/components/Pickup';
 import Deliver from './app/components/Deliver';
 import Closing from './app/components/Closing';
 import Finish from './app/components/Finish';
+import Hello from './app/components/Hello';
 
 const RootStack = createStackNavigator({
     Connection: Connection,
@@ -31,12 +32,13 @@ const RootStack = createStackNavigator({
     Finish: Finish,
     Deliver: Deliver,
     Test: TestFunctions,
-    Home: Home
+    Home: Home,
+
 
   },
   {
     initialRouteName: 'Home',
-  }
+  },
 );
 
 var backPressedOnce = false;
@@ -59,17 +61,26 @@ BackHandler.addEventListener('hardwareBackPress', function() {
                   backPressedOnce=false}, 2000);
     return true
     }
-
-
-
 });
+
+const MyTheme = {
+  dark: false,
+  colors: {
+    primary: '#00a3da',
+    background: '#dae5f1',
+    card: 'rgb(255, 255, 255)',
+    text: 'rgb(28, 28, 30)',
+    border: '#00a3da',
+  },
+};
 
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
   render() {
-    return <AppContainer />;
+    return <AppContainer/>;
   }
 }
+
 
 

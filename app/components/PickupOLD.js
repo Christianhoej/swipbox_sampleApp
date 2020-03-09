@@ -10,9 +10,7 @@ import {
     NativeModules,
     ToastAndroid,
     BackHandler,
-    ImageBackground,
-    ScrollView,
-    color
+    ScrollView
 } from 'react-native';
 
 import {
@@ -252,8 +250,7 @@ export default class Pickup extends Component {
         //this.onDisconnect();
         console.log('pressed');
 
-        uuid = '00000000-4462-4e45-0028-901000000042';
-        //uuid = this.textInputUUID._lastNativeText;
+        uuid = this.textInputUUID._lastNativeText;
 
         if (uuid == null || uuid.length == 0) {
             ToastAndroid.show('Empty uuid', ToastAndroid.SHORT);
@@ -301,34 +298,28 @@ export default class Pickup extends Component {
 
     render() {
        return (
-       /*<ScrollView
+       <ScrollView
                contentInsetAdjustmentBehavior="automatic"
-               >*/
-
-               <ImageBackground
-                         //source={{uri:'https://imgur.com/3Z2EWjh.png'}} style={{width: '100%', height: '100%'}}>
-                         //source={{uri:'https://imgur.com/8l8Esg3.png'}} style={{width: '100%', height: '100%'}}>
-                         source={{uri:'https://imgur.com/4Ou4EEe.png'}} style={{width: '100%', height: '100%'}}>
+               >
 
                <View style={styles.sectionContainer}>
                           <Text style={styles.sectionTitle}>Afhent din pakke på {startpunktVal}</Text>
 
-
+                           <Text style={styles.sectionTitle}>Din pakke er reserveret i:</Text>
 
 
                          </View>
 
                            <View style={styles.countdownStyle}>
-                           <Text style={styles.sectionTitle} >Din pakke er reserveret i:</Text>
                              <CountDown
                                until={60 * 30}
                                size={30}
-                               style={styles.margin}
+                               style={styles.countdownStyle}
                                onFinish={() => {navigation.replace('Home') || alert('Din reservation løb ud...')}}
-                               digitStyle={{backgroundColor: '#00a3da'}}
-                               digitTxtStyle={{color: '#fff'}}
+                               digitStyle={{backgroundColor: 'lightgrey'}}
+                               digitTxtStyle={{color: '#000'}}
                                timeToShow={['M', 'S']}
-                               timeLabels={{m: '', s: ''}}
+                               timeLabels={{m: 'M', s: 'S'}}
                              />
                              </View>
 
@@ -336,7 +327,6 @@ export default class Pickup extends Component {
                          <View style = {styles.button2}>
                                <Button
                                    title="Annuller"
-                                   color = '#00a3da'
                                   onPress={() => this.props.navigation.replace('Home', {closingVar1: closingVar, destination: destinationVal})}
                                    //onPress={() => this.props.navigation.replace('Closing')}
                                    />
@@ -344,20 +334,99 @@ export default class Pickup extends Component {
                            </View>
                            <View style = {styles.button2}>
                                 <Button
-                                     title="Åben låge"
-                                     color = '#00a3da'
-
-                                     onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}
-
-                                     //onPress={this.onConnectPress}
+                                     title="Forbind"
+                                     //  onPress={this.onConnectPress}
+                                     //onPress={() => navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}
+                                     //onPress={() => this.onConnectPress()}
+                                     onPress={this.onConnectPress}
                                      />
                                 </View>
+                             <View style = {styles.button2}>
+                              <Button
+                                  title="Åben"
+                                  //  onPress={this.onConnectPress}
+                                  //onPress={() => navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}
+                                  //onPress={() => this.onConnectPress()}
+                                  onPress={this.getData}
+                                  />
+                              </View>
                            </View>
 
 
-                  </ImageBackground>
+            <View style = {styles.container}>
+                <Text>SwipBox Sample App</Text>
+                <TextInput
+                    style={{textAlign: 'center'}}
+                    id="textInputUUID"
+                    placeholder="Enter UUID to connect"
+                    underlineColorAndroid="black"
+                    multiline={true}
+                    ref={input => this.textInputUUID = input}
+                    //value="00000000-4281-4e45-0039-50130000003c"
+                    value="00000000-4462-4e45-0028-901000000042"
+                    //value=LockerManager.
+                />
+                <Button
+                    title="Connect!"
+                    onPress={this.onConnectPress}
+                />
+            </View>
+            <View style = {styles.container}>
+                {this.state.loadingData ? null :
+                    <Button
+                        title="Get Data"
+                        onPress={this.getData}
+                        hide={this.state.loadingData}
+                    />
+                }
+                <TextInput
+                    style={{textAlign: 'center'}}
+                    id="textInputAuthenticationToken"
+                    placeholder="Enter authentication token"
+                    underlineColorAndroid="black"
+                    onChangeText={(text) => this.setState({authenticationToken: text})}
+                    multiline={true}
+                    value={this.state.authenticationToken}
+                    //value="AEAAIABAb9wgs/va55/7hp62W29wLVPDbP8BVDPenJroDAKrpZNikKpDMBdQZaex1aAgtFuChyV28bMfg9aGuHr8fxVATHt4x79r8CAiAvJFqPPGnGSMZZTRLnK/3ihcpRt2WbZLqM1YQ0FHHCnsD1jjo4LqIfmGQx32Xsiob9xGrQkJ7Zaa8z/RhDYDo6xROaHuPAzYwJx85MJndMP4Qi4nEGRZkg=="
+                />
+                <TextInput
+                    style={{textAlign: 'center'}}
+                    id="textInputAuthenticationResponse"
+                    placeholder="Enter authentication reponse"
+                    underlineColorAndroid="black"
+                    onChangeText={(text) => this.setState({authenticationResponse: text})}
+                    multiline={true}
+                    value={this.state.authenticationResponse}
+                    //value="TIMkaRx+8n4="
+                />
+                <Button
+                    title="Authenticate"
+                    onPress={this.onAuthenticatePress}
+                />
 
-        //</ScrollView>
+                <TextInput
+                    style={{textAlign: 'center'}}
+                    id="textInputCompartmentOpenToken"
+                    placeholder="Enter token to open compartment"
+                    underlineColorAndroid="black"
+                    onChangeText={(text) => this.setState({token: text})}
+                    multiline={true}
+                    value={this.state.token}
+                    //value="AEAAIABAUdWMvVRzjJGdBoBGeKJu3K3OJn/nG6HzCwIdkuUi3dDg4oW9nl0z+5VpzA2t8KX7pIOnax4htZPda2ZUIbhTGlFPIKj0rAAaO99S9wE7WsobP298WG9MLYYxbFhk0cUbpTGsa2QWWwjgZWmyTuG8460Cc/fICCkN7gE24x5623fwQYX/y9L14oCvxlOK/DxwE5YGkm8ZHGWexf3uGpeYEg=="
+                />
+                <Button
+                    title="Open Compartment"
+                    onPress={this.onCompartmentOpenPress}
+                />
+
+                <View style={styles.test}>
+                    <Button
+                        title="Disconnect"
+                        onPress={this.onDisconnect}
+                    />
+                </View>
+            </View>
+        </ScrollView>
         )
     }
 }
@@ -374,15 +443,12 @@ container: {
 sectionContainer: {
       marginTop: 32,
   },
-  margin: {
-        marginTop: 32,
-    },
   scrollView: {
-      backgroundColor: '#dae5f1',
+      backgroundColor: Colors.white,
     },
 countdownStyle: {
       paddingHorizontal: 20,
-      marginTop: 150
+      marginTop: 20
     },
     engine: {
       position: 'absolute',
@@ -395,7 +461,7 @@ countdownStyle: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 60
+        marginTop: 20
       },
     sectionContainer: {
       marginTop: 32,
@@ -404,7 +470,7 @@ countdownStyle: {
     sectionTitle: {
       fontSize: 24,
       fontWeight: '600',
-      color: 'white',
+      color: Colors.black,
       textAlign: 'center'
     },
     sectionDescription: {
