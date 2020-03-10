@@ -10,8 +10,10 @@ import {
     NativeModules,
     ToastAndroid,
     BackHandler,
+    TouchableOpacity,
     ImageBackground,
     ScrollView,
+    Image,
     color
 } from 'react-native';
 
@@ -299,27 +301,29 @@ export default class Pickup extends Component {
             this.props.navigation.replace('Closing')
         }
 
-    render() {
-       return (
-       /*<ScrollView
-               contentInsetAdjustmentBehavior="automatic"
-               >*/
-
-               <ImageBackground
+/*<ImageBackground
                          //source={{uri:'https://imgur.com/3Z2EWjh.png'}} style={{width: '100%', height: '100%'}}>
                          //source={{uri:'https://imgur.com/8l8Esg3.png'}} style={{width: '100%', height: '100%'}}>
-                         source={{uri:'https://imgur.com/4Ou4EEe.png'}} style={{width: '100%', height: '100%'}}>
+                         source={{uri:'https://imgur.com/4Ou4EEe.png'}} style={{width: '100%', height: '100%'}}>*/
+                             //</ImageBackground>
+    render() {
+       return (
+       <ScrollView
+               contentInsetAdjustmentBehavior="automatic"
+               >
 
-               <View style={styles.sectionContainer}>
+
+
+                <View style={styles.sectionContainer}>
                           <Text style={styles.sectionTitle}>Afhent din pakke på {startpunktVal}</Text>
 
 
 
 
-                         </View>
+                </View>
 
-                           <View style={styles.countdownStyle}>
-                           <Text style={styles.sectionTitle} >Din pakke er reserveret i:</Text>
+                <View style={styles.countdownStyle}>
+                       <Text style={styles.sectionTitle} >Din pakke er reserveret i:</Text>
                              <CountDown
                                until={60 * 30}
                                size={30}
@@ -330,34 +334,35 @@ export default class Pickup extends Component {
                                timeToShow={['M', 'S']}
                                timeLabels={{m: '', s: ''}}
                              />
-                             </View>
+                </View>
+
+
 
                      <View style={styles.butttonContainer}>
-                         <View style = {styles.button2}>
-                               <Button
-                                   title="Annuller"
-                                   color = '#00a3da'
-                                  onPress={() => this.props.navigation.replace('Home', {closingVar1: closingVar, destination: destinationVal})}
-                                   //onPress={() => this.props.navigation.replace('Closing')}
-                                   />
 
-                           </View>
-                           <View style = {styles.button2}>
-                                <Button
-                                     title="Åben låge"
-                                     color = '#00a3da'
+                     <TouchableOpacity
+                        onPress={() => this.props.navigation.replace('Home', {closingVar1: closingVar, destination: destinationVal})}>
+                             <Image
+                                 style={{width: 100, height: 100}}
+                                 source={{uri:'https://i.ibb.co/yyWdsHY/annuller.png'}}
+                             />
+                             </TouchableOpacity>
+                         <TouchableOpacity
+                             onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}>
+                                  <Image
+                                      style={{width: 100, height: 100}}
+                                      source={{uri:'https://i.ibb.co/KLYK4zL/ben-l-ge.png'}}
 
-                                     onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}
+                                  />
+                          </TouchableOpacity>
 
-                                     //onPress={this.onConnectPress}
-                                     />
                                 </View>
-                           </View>
 
 
-                  </ImageBackground>
 
-        //</ScrollView>
+
+
+        </ScrollView>
         )
     }
 }
@@ -378,11 +383,11 @@ sectionContainer: {
         marginTop: 32,
     },
   scrollView: {
-      backgroundColor: '#dae5f1',
+      backgroundColor: '#fff',
     },
 countdownStyle: {
       paddingHorizontal: 20,
-      marginTop: 150
+      marginTop: 100
     },
     engine: {
       position: 'absolute',
@@ -395,7 +400,8 @@ countdownStyle: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 60
+        marginTop: 60,
+        paddingHorizontal: 30
       },
     sectionContainer: {
       marginTop: 32,
@@ -404,14 +410,14 @@ countdownStyle: {
     sectionTitle: {
       fontSize: 24,
       fontWeight: '600',
-      color: 'white',
+      color: '#00a3da',
       textAlign: 'center'
     },
     sectionDescription: {
       marginTop: 8,
       fontSize: 18,
       fontWeight: '400',
-      color: Colors.dark,
+      color: '#00a3da',
     },
     highlight: {
       fontWeight: '700',

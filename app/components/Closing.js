@@ -93,14 +93,17 @@ export default class Closing extends Component {
             LockerManager.disconnect(UUID);
         }
 
-
+/*<ImageBackground
+          source={{uri:'https://imgur.com/TcklwFa.png'}} style={{width: '100%', height: '100%'}}>
+</ImageBackground>*/
 
     render() {
         return (
 
+<ScrollView
+               contentInsetAdjustmentBehavior="automatic"
+               style={styles.scrollView}>
 
-          <ImageBackground
-          source={{uri:'https://imgur.com/TcklwFa.png'}} style={{width: '100%', height: '100%'}}>
 
 
 
@@ -115,7 +118,11 @@ export default class Closing extends Component {
 
 
               <View style={styles.sectionContainer}>
-              <ActivityIndicator size="large" color="#00a3da" />
+              <Image
+                    style={{width: 100, height: 100}}
+                    source={{uri:'https://i.ibb.co/FgKRGY1/Spinner-1-6s-210px.gif'}}
+
+                />
             </View>
 
             <View style = {styles.button}>
@@ -135,9 +142,8 @@ export default class Closing extends Component {
                       />
                     </View>
 
+                </ScrollView>
 
-
-                  </ImageBackground>
 
 
         )
@@ -165,7 +171,7 @@ sectionContainer: {
           resizeMode: 'cover'
       },
   scrollView: {
-      backgroundColor: '#dae5f1',
+      backgroundColor: '#fff',
 
     },
     engine: {
@@ -178,18 +184,20 @@ sectionContainer: {
     sectionContainer: {
       marginTop: 32,
       paddingHorizontal: 24,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     sectionTitle: {
       fontSize: 24,
       fontWeight: '600',
-      color: 'white',
+      color: '#00a3da',
       textAlign: 'center'
     },
     sectionDescription: {
       marginTop: 8,
       fontSize: 18,
       fontWeight: '400',
-      color: 'white',
+      color: '#00a3da',
     },
     highlight: {
       fontWeight: '700',

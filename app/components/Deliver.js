@@ -10,6 +10,8 @@ import {
     NativeModules,
     ToastAndroid,
     BackHandler,
+    TouchableOpacity,
+    Image,
     ScrollView
 } from 'react-native';
 
@@ -113,212 +115,228 @@ export default class Deliver extends Component {
             destinationVal = this.props.navigation.getParam('destinationVal','');
 
 
-//        this.onDisconnect();
+        this.onDisconnect();
     }
 
     componentWillUnmount() {
-        console.log('componentWillUnmount');
+            console.log('componentWillUnmount');
 
-        apiErrorListener.remove();
-        apiDataAvailable.remove();
+            apiErrorListener.remove();
+            apiDataAvailable.remove();
 
-        errorListener.remove();
-        tokenAvailableListener.remove();
-        statusAvailableListener.remove();
-        connectionStatusChangedListener.remove();
-        compartmentStatusChangedListener.remove();
-        authenticationStatusChangedListener.remove();
-        //BackHandler.removeEventListener("hardwareBackPress", this.handleOnBackPress);
-    }
+            errorListener.remove();
+            tokenAvailableListener.remove();
+            statusAvailableListener.remove();
+            connectionStatusChangedListener.remove();
+            compartmentStatusChangedListener.remove();
+            authenticationStatusChangedListener.remove();
+            //BackHandler.removeEventListener("hardwareBackPress", this.handleOnBackPress);
+        }
 
-    componentDidMount() {
-        console.log('componentDidMount');
+        componentDidMount() {
+            console.log('componentDidMount');
 
-        const eventEmitter = new NativeEventEmitter(NativeModules.LockerManager);
+            const eventEmitter = new NativeEventEmitter(NativeModules.LockerManager);
 
-        connectionStatusChangedListener = eventEmitter.addListener('onConnectionStatusChanged', (event) => {
-                    console.log('EVENT-connectionStatusChangedListener')
+            connectionStatusChangedListener = eventEmitter.addListener('onConnectionStatusChanged', (event) => {
+                        console.log('EVENT-connectionStatusChangedListener')
 
-            console.log('uid: ' + event.uid + ', status: ' + event.status);
-//Her
-            this.setState({isConnecting: false});
-            if (event.status === LockerManager.STATUS_DEVICE_CONNECTED) {
-            console.log('connected');
-            LockerManager.stopScan();
+                console.log('uid: ' + event.uid + ', status: ' + event.status);
+    //Her
+                this.setState({isConnecting: false});
+                if (event.status === LockerManager.STATUS_DEVICE_CONNECTED) {
+                console.log('connected');
+                LockerManager.stopScan();
 
-            //setTimeout(this.getData(), 6000)
-            //setTimeout(function(){this.getData()} , 10000)
-            //this.getData();
-            /*if(event.uid)
-            this.onAuthenticatePress();*/
-            this.getData()
-            } else {
-            console.log('connection failed');
-            ToastAndroid.show('connection failed status code ' + event.status, ToastAndroid.SHORT);
-            }
-//Til her
-            if (event.status === LockerManager.STATUS_DEVICE_TIME_OUT) {
-                console.log('Device timeout');
-                ToastAndroid.show("Deice timeout", ToastAndroid.LONG);
-                LockerManager.startScan();
-            } else if (event.status === LockerManager.STATUS_DEVICE_OUT_OF_RANGE) {
-                console.log('Device out of range');
-                ToastAndroid.show("Device out of range", ToastAndroid.LONG);
-                LockerManager.startScan();
-            }
-        });
+                //setTimeout(this.getData(), 6000)
+                //setTimeout(function(){this.getData()} , 10000)
+                //this.getData();
+                /*if(event.uid)
+                this.onAuthenticatePress();*/
+                this.getData()
+                } else {
+                console.log('connection failed');
+                //ToastAndroid.show('connection failed status code ' + event.status, ToastAndroid.SHORT);
+                alert('Forbindelsen til skabet mislykkedes. Husk at tænde for din Bluetooth forbindelse og prøv igen.')
 
-            authenticationStatusChangedListener = eventEmitter.addListener('onAuthenticationStatusChanged', (event) => {
-            console.log('EVENT-authenticationStatusChangedListener');
+                }
+    //Til her
+                if (event.status === LockerManager.STATUS_DEVICE_TIME_OUT) {
+                    console.log('Device timeout');
+                    ToastAndroid.show("Deice timeout", ToastAndroid.LONG);
+                    LockerManager.startScan();
+                } else if (event.status === LockerManager.STATUS_DEVICE_OUT_OF_RANGE) {
+                    console.log('Device out of range');
+                    ToastAndroid.show("Device out of range", ToastAndroid.LONG);
+                    LockerManager.startScan();
+                }
+            });
 
-                    console.log('uid: ' + event.uid + ', isAuthenticated: ' + event.isAuthenticated);
-                    isAuthenticated = event.isAuthenticated;
-                    ToastAndroid.show(isAuthenticated ? "Authenticated" : "Authentication failed", ToastAndroid.LONG);
-                    if(isAuthenticated){
-                    this.onCompartmentOpenPress()}
-                });
+                authenticationStatusChangedListener = eventEmitter.addListener('onAuthenticationStatusChanged', (event) => {
+                console.log('EVENT-authenticationStatusChangedListener');
 
-            compartmentStatusChangedListener= eventEmitter.addListener('onCompartmentStatusChanged', (event) => {
-                    console.log('EVENT-compartmentStatusChangedListener');
-                    console.log('uid: ' + event.uid + ', compartmentId: ' + event.compartmentId + ', compartmentState: ' + event.compartmentState);
-                    ToastAndroid.show("Compartment id " + event.compartmentId + (event.compartmentState == 1 ? " opened" : " closed"), ToastAndroid.LONG);
-                    if(event.compartmentState == 1){
-                    this.props.navigation.replace('Closing',  {closingVar1: closingVar})
-                    }
-                });
-
-            statusAvailableListener = eventEmitter.addListener('onStatusAvailable', (event) => {
-                    console.log('EVENT-statusAvailableListener');
-
-                    console.log('uid: ' + event.uid + ', status: ' + event.status);
-                    //ToastAndroid.show(event.status, ToastAndroid.LONG);
-                    //this.onAuthenticatePress()
-                });
-
-            tokenAvailableListener = eventEmitter.addListener('onTokenAvailable', (event) => {
-            console.log('EVENT-tokenAvailableListener')
-                    console.log('uid: ' + event.uid + ', token: ' + event.token);
-                    ToastAndroid.show(event.token, ToastAndroid.LONG);
-                    //this.onAuthenticatePress()
-                });
-
-            errorListener = eventEmitter.addListener('onError', (event) => {
-            console.log('EVENT-errorListener')
-                    console.log('uid: ' + event.uid + ', errorCode: ' + event.errorCode);
-                    ToastAndroid.show("Error Code: " + event.errorCode, ToastAndroid.LONG);
-                });
-
-
-            apiErrorListener = eventEmitter.addListener('onApiError', (event) => {
-            console.log('EVENT-apiErrorListener')
-                    this.setState({loadingData: false});
-
-                    console.log('API: errorCode: ' + event.errorCode);
-                    ToastAndroid.show("Error Code: " + event.errorCode, ToastAndroid.LONG);
-                });
-
-            apiDataAvailable = eventEmitter.addListener('onApiDataAvailable', (event) => {
-            console.log('EVENT-apiDataAvailable')
-                    this.setState({
-                        loadingData: false,
-                        token: event.token,
-                        authenticationToken: event.authenticationToken,
-                        authenticationResponse: event.authenticationResponse
-                    //this.onAuthenticatePress();
-
+                        console.log('uid: ' + event.uid + ', isAuthenticated: ' + event.isAuthenticated);
+                        isAuthenticated = event.isAuthenticated;
+                        ToastAndroid.show(isAuthenticated ? "Authenticated" : "Authentication failed", ToastAndroid.LONG);
+                        if(isAuthenticated){
+                        this.onCompartmentOpenPress()}
                     });
 
-                    console.log('API TOKEN: ' + event.token);
-                    console.log('API AUTHENTICATION: ' + event.authenticationToken);
-                    console.log('API AUTHENTICATION RESPONSE: ' + event.authenticationResponse);
+                compartmentStatusChangedListener= eventEmitter.addListener('onCompartmentStatusChanged', (event) => {
+                        console.log('EVENT-compartmentStatusChangedListener');
+                        console.log('uid: ' + event.uid + ', compartmentId: ' + event.compartmentId + ', compartmentState: ' + event.compartmentState);
+                        ToastAndroid.show("Compartment id " + event.compartmentId + (event.compartmentState == 1 ? " opened" : " closed"), ToastAndroid.LONG);
+                        if(event.compartmentState == 1){
+                        this.props.navigation.replace('Closing',  {closingVar1: closingVar})
+                        }
+                    });
 
-                    this.onAuthenticatePress();
+                statusAvailableListener = eventEmitter.addListener('onStatusAvailable', (event) => {
+                        console.log('EVENT-statusAvailableListener');
 
-                });
-    }
+                        console.log('uid: ' + event.uid + ', status: ' + event.status);
+                        //ToastAndroid.show(event.status, ToastAndroid.LONG);
+                        //this.onAuthenticatePress()
+                    });
 
-    onConnectPress() {
-        //this.onDisconnect();
-        console.log('pressed');
+                tokenAvailableListener = eventEmitter.addListener('onTokenAvailable', (event) => {
+                console.log('EVENT-tokenAvailableListener')
+                        console.log('uid: ' + event.uid + ', token: ' + event.token);
+                        ToastAndroid.show(event.token, ToastAndroid.LONG);
+                        //this.onAuthenticatePress()
+                    });
 
-        uuid = this.textInputUUID._lastNativeText;
+                errorListener = eventEmitter.addListener('onError', (event) => {
+                console.log('EVENT-errorListener')
+                        console.log('uid: ' + event.uid + ', errorCode: ' + event.errorCode);
+                        ToastAndroid.show("Error Code: " + event.errorCode, ToastAndroid.LONG);
+                    });
 
-        if (uuid == null || uuid.length == 0) {
-            ToastAndroid.show('Empty uuid', ToastAndroid.SHORT);
-        } else {
-            console.log(uuid);
-            //LockerManager.startScan();
-            this.setState({isConnecting: true});
-            LockerManager.connect(uuid);
 
+                apiErrorListener = eventEmitter.addListener('onApiError', (event) => {
+                console.log('EVENT-apiErrorListener')
+                        this.setState({loadingData: false});
+
+                        console.log('API: errorCode: ' + event.errorCode);
+                        ToastAndroid.show("Error Code: " + event.errorCode, ToastAndroid.LONG);
+                    });
+
+                apiDataAvailable = eventEmitter.addListener('onApiDataAvailable', (event) => {
+                console.log('EVENT-apiDataAvailable')
+                        this.setState({
+                            loadingData: false,
+                            token: event.token,
+                            authenticationToken: event.authenticationToken,
+                            authenticationResponse: event.authenticationResponse
+                        //this.onAuthenticatePress();
+
+                        });
+
+                        console.log('API TOKEN: ' + event.token);
+                        console.log('API AUTHENTICATION: ' + event.authenticationToken);
+                        console.log('API AUTHENTICATION RESPONSE: ' + event.authenticationResponse);
+
+                        this.onAuthenticatePress();
+
+                    });
         }
-    }
 
-        getData() {
-        setTimeout(function(){
-            LockerManager.getData(UUID);
-            /*this.setState({
-                    loadingData: !this.state.loadingData
-                });*/
-        } , 10000)
+        onConnectPress() {
+            //this.onDisconnect();
+            console.log('pressed');
+
+            uuid = '00000000-4462-4e45-0028-901000000042';
+            //uuid = this.textInputUUID._lastNativeText;
+
+            if (uuid == null || uuid.length == 0) {
+                ToastAndroid.show('Empty uuid', ToastAndroid.SHORT);
+            } else {
+                console.log(uuid);
+                //LockerManager.startScan();
+                this.setState({isConnecting: true});
+                LockerManager.connect(uuid);
+
+            }
         }
 
-        onAuthenticatePress() {
-            LockerManager.authenticate(
-                UUID,
-                this.state.authenticationToken,
-                this.state.authenticationResponse
-            );
+            getData() {
+            setTimeout(function(){
+                LockerManager.getData(UUID);
+                /*this.setState({
+                        loadingData: !this.state.loadingData
+                    });*/
+            } , 10000)
+            }
+
+            onAuthenticatePress() {
+                LockerManager.authenticate(
+                    UUID,
+                    this.state.authenticationToken,
+                    this.state.authenticationResponse
+                );
+            }
+
+            onCompartmentOpenPress() {
+                LockerManager.openCompartment(
+                    UUID,
+                    this.state.token
+                );
+            }
+
+            onDisconnect() {
+                LockerManager.startScan();
+                LockerManager.disconnect(UUID);
+            }
+
+            toClosing() {
+                this.props.navigation.replace('Closing')
+            }
+
+    /*<ImageBackground
+                             //source={{uri:'https://imgur.com/3Z2EWjh.png'}} style={{width: '100%', height: '100%'}}>
+                             //source={{uri:'https://imgur.com/8l8Esg3.png'}} style={{width: '100%', height: '100%'}}>
+                             source={{uri:'https://imgur.com/4Ou4EEe.png'}} style={{width: '100%', height: '100%'}}>*/
+                                 //</ImageBackground>
+        render() {
+           return (
+           <ScrollView
+                   contentInsetAdjustmentBehavior="automatic"
+                   >
+
+
+
+                    <View style={styles.sectionContainer}>
+                              <Text style={styles.sectionTitle}>Aflever din pakke på {destinationVal}</Text>
+
+
+
+
+                    </View>
+
+
+
+
+                         <View style={styles.butttonContainer}>
+
+
+                             <TouchableOpacity
+                                 onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}>
+                                      <Image
+                                          style={{width: 100, height: 100}}
+                                          source={{uri:'https://i.ibb.co/KLYK4zL/ben-l-ge.png'}}
+
+                                      />
+                              </TouchableOpacity>
+
+                                    </View>
+
+
+
+
+
+            </ScrollView>
+            )
         }
-
-        onCompartmentOpenPress() {
-            LockerManager.openCompartment(
-                UUID,
-                this.state.token
-            );
-        }
-
-        onDisconnect() {
-            LockerManager.startScan();
-            LockerManager.disconnect(UUID);
-        }
-
-        toClosing() {
-            this.props.navigation.replace('Closing')
-        }
-
-    render() {
-       return (
-       <ScrollView
-               contentInsetAdjustmentBehavior="automatic"
-               >
-                     <View style={styles.butttonContainer}>
-
-                           <View style = {styles.button2}>
-                                <Button
-                                     title="Forbind"
-                                     //  onPress={this.onConnectPress}
-                                     //onPress={() => navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}
-                                     //onPress={() => this.onConnectPress()}
-                                     onPress={this.onConnectPress}
-                                     />
-                                </View>
-                             <View style = {styles.button2}>
-                              <Button
-                                  title="Åben"
-                                  //  onPress={this.onConnectPress}
-                                  onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}
-                                  //onPress={() => this.onConnectPress()}
-                                  //onPress={console.log("DELIVER_OPEN"), this.getData}
-                                  />
-                              </View>
-                           </View>
-
-
-
-        </ScrollView>
-        )
-    }
 }
 
 
@@ -351,7 +369,8 @@ countdownStyle: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 20
+        marginTop: 20,
+        paddingHorizontal: 30
       },
     sectionContainer: {
       marginTop: 32,

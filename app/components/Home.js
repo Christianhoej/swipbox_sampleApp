@@ -18,6 +18,7 @@ import {
 import {HeaderBackButton} from 'react-navigation-stack';
 import LockerManager from './LockerManager';
 import RNPickerSelect from 'react-native-picker-select';
+//import { Icon } from 'react-native-elements'
 
 
 
@@ -100,25 +101,23 @@ export default class Home extends Component {
                            />
                        </View>
 
-                  <View style = {styles.sectionContainer}>
-                   <Button
-                   //style={styles.myButton}
-                    title='Reserver pakke'
-                    color = '#00a3da'
-
-                       onPress={() => {
-                           if(startpunkt==null || destination==null || startpunkt==destination)
-                               alert('Indtast venligst både Startpunkt og Destination. Bemærk disse må ikke være ens')
-                           else
-                               this.props.navigation.replace('Pickup', {startpunktVal: startpunkt, destinationVal: destination})}
-                       }>
-                       /*<Text style={{justifyContent: 'center', textAlign:'center', alignItems: 'center'}}>
-                       Hello
-                       </Text>*/
-                     </Button>
-                   </View>
 
 
+
+<View style = {styles.imageContainer}>
+    <TouchableOpacity onPress={() => {
+         if(startpunkt==null || destination==null || startpunkt==destination)
+             alert('Indtast venligst både Startpunkt og Destination. Bemærk disse må ikke være ens')
+         else
+             this.props.navigation.replace('Pickup', {startpunktVal: startpunkt, destinationVal: destination})}
+     }>
+        <Image
+            style={{width: 150, height: 150}}
+            source={{uri:'https://i.ibb.co/r3fGFrR/reserver.png'}}
+
+        />
+        </TouchableOpacity>
+         </View>
     </ScrollView>
         )
     }
@@ -132,13 +131,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     submit:{
-        marginRight:40,
-        marginLeft:40,
-        marginTop:10,
-        paddingTop:20,
-        paddingBottom:20,
+        borderRadius: 100/ 2,
         backgroundColor:'#fff',
-        borderRadius:20,
+        borderRadius:200,
         borderWidth: 5,
         borderColor: '#00a3da'
       },
@@ -153,7 +148,8 @@ const styles = StyleSheet.create({
     },
 
   scrollView: {
-      backgroundColor: '#dae5f1',
+      //backgroundColor: '#dae5f1',
+      backgroundColor: '#fff',
     },
     myButton:{
         padding: 5,

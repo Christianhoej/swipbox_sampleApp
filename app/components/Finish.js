@@ -10,11 +10,14 @@ import {
     BackHandler,
     ToastAndroid,
     ScrollView,
+    Image,
     ActivityIndicator,
     color
 } from 'react-native';
 import {HeaderBackButton} from 'react-navigation-stack';
 import LockerManager from './LockerManager';
+import LottieView from 'lottie-react-native';
+
 
 
 
@@ -36,6 +39,11 @@ export default class Finish extends Component {
 
     }
 
+    componentDidMount() {
+            console.log('componentDidMount');
+           // this.animation.play();
+    }
+
     render() {
         return (
            <ScrollView
@@ -44,22 +52,23 @@ export default class Finish extends Component {
                      <View style={styles.sectionContainer}>
                        <Text style={styles.sectionTitle}>Tak for din hjælp!</Text>
                        <Text style={styles.sectionDescription}>Indtast din email nedenfor hvor du vil modtage din rabat</Text>
-                       <TextInput
-                             style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                             onChangeText={text => onChangeText(text)}
-                             //value={value}
-                           />
+
 
                      </View>
-                       <View style={styles.sectionContainer}>
 
-                     </View>
-                     <View style = {styles.button}>
-                             <Button
-                                 title="Afslut"
-                                   onPress={() => {this.props.navigation.replace('Home'), console.log('value')}}
-                               />
-                             </View>
+
+
+
+                 <LottieView
+                      style = {styles.lottieStyle}
+
+                              source={require('../files/checkmark.json')}
+                              autoPlay loop
+                            />
+
+
+
+
                    </ScrollView>
         )
     }
@@ -74,8 +83,13 @@ const styles = StyleSheet.create({
     },
     test: {
         marginTop: 16,
-        backgroundColor: 'black'
+
     },
+    lottieStyle: {
+        marginTop: 40,
+
+
+        },
 sectionContainer: {
       marginTop: 32,
   },
@@ -122,7 +136,7 @@ sectionContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 30,
-        marginTop: 100,
+        marginTop: 400,
         fontSize: 40,
         fontWeight: "400"
     },

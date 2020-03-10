@@ -194,6 +194,13 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.13'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
+    implementation 'com.facebook.fresco:fresco:2.0.0'
+    // For animated GIF support
+    implementation 'com.facebook.fresco:animated-gif:2.0.0'
+
+    implementation project(':lottie-react-native')
+
+
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
