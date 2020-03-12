@@ -104,12 +104,6 @@ export default class Closing extends Component {
                contentInsetAdjustmentBehavior="automatic"
                style={styles.scrollView}>
 
-
-
-
-
-
-
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>{text1}</Text>
               <Text style={styles.sectionDescription}></Text>

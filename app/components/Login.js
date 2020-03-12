@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import {HeaderBackButton} from 'react-navigation-stack';
 import LockerManager from './LockerManager';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
@@ -33,12 +34,30 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+                    isLoaded: false,
+                     wasShown: false
+                }
 
     }
 
     componentDidMount() {
             console.log('componentDidMount');
+    try {
 
+
+       AsyncStorage.getItem('key2') // get key
+            .then(wasShown => {
+                if(wasShown === null) { // first time
+                  // we need to save key for the next time
+                  AsyncStorage.setItem('key2', '"true"')
+                }
+
+                this.setState({isLoaded: true, wasShown})
+             })
+      } catch (e) {
+             console.log('LOGIN_ERROR')
+           }
     }
 
 
@@ -49,20 +68,8 @@ export default class Login extends Component {
             <ScrollView
                contentInsetAdjustmentBehavior="automatic"
                style={styles.scrollView}>
-                 <View style={styles.sectionContainer}>
-                   <Text style={styles.sectionTitle}>Login</Text>
-                   <TextInput
-                         style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                         onChangeText={text => onChangeText(text)}
-                         //value={value}
-                       />
-                   <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                        onChangeText={text => onChangeText(text)}
-                        //value={value}
-                      />
 
-                 </View>
+
                    <View style={styles.sectionContainer}>
                         <Text style={styles.sectionTitle}>Opret bruger</Text>
                        <TextInput
@@ -79,7 +86,7 @@ export default class Login extends Component {
                  <View style = {styles.button}>
                          <Button
                              title="Afslut"
-                               onPress={() => {this.props.navigation.replace('Home'), console.log('value')}}
+                               onPress={() => {this.props.navigation.replace('Home')}}
                            />
                          </View>
                </ScrollView>

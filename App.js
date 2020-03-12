@@ -23,8 +23,31 @@ import Deliver from './app/components/Deliver';
 import Closing from './app/components/Closing';
 import Finish from './app/components/Finish';
 import Hello from './app/components/Hello';
+import Login from './app/components/Login';
+import Splash from './app/components/Splash';
 
 const RootStack = createStackNavigator({
+    Connection: Connection,
+    Operation: Operation,
+    Pickup: Pickup,
+    Closing: Closing,
+    Finish: Finish,
+    Deliver: Deliver,
+    Test: TestFunctions,
+    Home: Home,
+    Login: Login,
+    Splash: Splash,
+
+
+  },
+  {
+        initialRouteName: 'Splash',
+
+
+
+  },
+);
+const RootStack2 = createStackNavigator({
     Connection: Connection,
     Operation: Operation,
     Pickup: Pickup,
@@ -37,9 +60,14 @@ const RootStack = createStackNavigator({
 
   },
   {
-    initialRouteName: 'Home',
+        initialRouteName: 'Home',
+
+
+
   },
 );
+
+
 
 var backPressedOnce = false;
 
@@ -75,12 +103,25 @@ const MyTheme = {
 };
 
 const AppContainer = createAppContainer(RootStack);
+const AppContainer2 = createAppContainer(RootStack2);
 
 export default class App extends Component {
+
+constructor(props) {
+        super(props);
+
+
+    }
+
+
   render() {
-    return <AppContainer/>;
-  }
+
+                return <AppContainer/>;
+
+
+    }
 }
+
 
 
 

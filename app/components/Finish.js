@@ -7,10 +7,12 @@ import {
     Button,
     NativeEventEmitter,
     NativeModules,
+    TouchableOpacity,
     BackHandler,
     ToastAndroid,
     ScrollView,
     Image,
+
     ActivityIndicator,
     color
 } from 'react-native';
@@ -49,24 +51,27 @@ export default class Finish extends Component {
            <ScrollView
                    contentInsetAdjustmentBehavior="automatic"
                    style={styles.scrollView}>
-                     <View style={styles.sectionContainer}>
+
+                    <View style={styles.sectionContainer}>
                        <Text style={styles.sectionTitle}>Tak for din hjælp!</Text>
-                       <Text style={styles.sectionDescription}>Indtast din email nedenfor hvor du vil modtage din rabat</Text>
+                    </View>
 
+    <TouchableOpacity onPress={() => {
 
-                     </View>
+             this.props.navigation.replace('Home')}
+     }>
 
 
 
 
                  <LottieView
-                      style = {styles.lottieStyle}
-
+                      style={{ flex: 1, justifyContent: 'center', alignContent: 'center',height: '100%', width: '100%'}}
                               source={require('../files/checkmark.json')}
-                              autoPlay loop
+                              autoPlay
+                              loop = {false}
+
                             />
-
-
+        </TouchableOpacity>
 
 
                    </ScrollView>
@@ -84,14 +89,22 @@ const styles = StyleSheet.create({
     test: {
         marginTop: 16,
 
+
     },
     lottieStyle: {
-        marginTop: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 200,
+        height: 200,
+
 
 
         },
 sectionContainer: {
-      marginTop: 32,
+      marginTop: 60,
+
+
+
   },
   scrollView: {
       backgroundColor: 'white',
@@ -110,8 +123,9 @@ sectionContainer: {
     sectionTitle: {
       fontSize: 24,
       fontWeight: '600',
-      color: 'black',
-      textAlign: 'center'
+      color: '#00a3da',
+      textAlign: 'center',
+      marginTop: 50
     },
     sectionDescription: {
       marginTop: 8,

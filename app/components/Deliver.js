@@ -301,45 +301,32 @@ export default class Deliver extends Component {
            return (
            <ScrollView
                    contentInsetAdjustmentBehavior="automatic"
-                   >
-
-
+                   style={styles.scrollView}>
 
                     <View style={styles.sectionContainer}>
                               <Text style={styles.sectionTitle}>Aflever din pakke på {destinationVal}</Text>
-
-
-
-
                     </View>
 
+                    <View style={styles.sectionContainer}>
+                        <Image
+                              style={{width: 400, height: 150, justifyContent: 'center', alignItems: 'center'}}
+                              source={{uri:'https://i.ibb.co/89c2cm8/01-Crowd-Ship-box.jpg'}}
+                        />
+                    </View>
 
-
-
-                         <View style={styles.butttonContainer}>
-
-
-                             <TouchableOpacity
-                                 onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}>
-                                      <Image
-                                          style={{width: 100, height: 100}}
-                                          source={{uri:'https://i.ibb.co/KLYK4zL/ben-l-ge.png'}}
-
-                                      />
-                              </TouchableOpacity>
-
-                                    </View>
-
-
-
-
-
+                     <View style={styles.butttonContainer}>
+                         <TouchableOpacity
+                             onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}>
+                                  <Image
+                                      style={{width: 150, height: 150, justifyContent: 'center', alignItems: 'center'}}
+                                      source={{uri:'https://i.ibb.co/KLYK4zL/ben-l-ge.png'}}
+                                  />
+                          </TouchableOpacity>
+                     </View>
             </ScrollView>
             )
         }
 }
-
-
 
 const styles = StyleSheet.create({
 container: {
@@ -352,7 +339,7 @@ sectionContainer: {
       marginTop: 32,
   },
   scrollView: {
-      backgroundColor: Colors.white,
+      backgroundColor: '#fff',
     },
 countdownStyle: {
       paddingHorizontal: 20,
@@ -367,19 +354,22 @@ countdownStyle: {
     },
     butttonContainer: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 20,
         paddingHorizontal: 30
       },
     sectionContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
       marginTop: 32,
       paddingHorizontal: 24,
     },
     sectionTitle: {
       fontSize: 24,
       fontWeight: '600',
-      color: Colors.black,
+      color: '#00a3da',
       textAlign: 'center'
     },
     sectionDescription: {

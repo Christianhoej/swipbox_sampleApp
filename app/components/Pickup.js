@@ -310,15 +310,23 @@ export default class Pickup extends Component {
        return (
        <ScrollView
                contentInsetAdjustmentBehavior="automatic"
+               style={styles.scrollView}
                >
-
-
 
                 <View style={styles.sectionContainer}>
                           <Text style={styles.sectionTitle}>Afhent din pakke på {startpunktVal}</Text>
+                </View>
 
 
+                <View style={styles.testContainer}>
+                     <Image
+                           style={{width: 400, height: 150, justifyContent: 'center', alignItems: 'center'}}
+                           source={{uri:'https://i.ibb.co/89c2cm8/01-Crowd-Ship-box.jpg'}}
+                     />
+                </View>
 
+
+<View style={styles.sectionContainer}>
 
                 </View>
 
@@ -338,7 +346,7 @@ export default class Pickup extends Component {
 
 
 
-                     <View style={styles.butttonContainer}>
+                 <View style={styles.butttonContainer}>
 
                      <TouchableOpacity
                         onPress={() => this.props.navigation.replace('Home', {closingVar1: closingVar, destination: destinationVal})}>
@@ -346,17 +354,17 @@ export default class Pickup extends Component {
                                  style={{width: 100, height: 100}}
                                  source={{uri:'https://i.ibb.co/yyWdsHY/annuller.png'}}
                              />
-                             </TouchableOpacity>
-                         <TouchableOpacity
-                             onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}>
-                                  <Image
-                                      style={{width: 100, height: 100}}
-                                      source={{uri:'https://i.ibb.co/KLYK4zL/ben-l-ge.png'}}
+                     </TouchableOpacity>
+                     <TouchableOpacity
+                         onPress={() => this.props.navigation.replace('Closing', {closingVar1: closingVar, destination: destinationVal})}>
+                              <Image
+                                  style={{width: 100, height: 100}}
+                                  source={{uri:'https://i.ibb.co/KLYK4zL/ben-l-ge.png'}}
 
-                                  />
-                          </TouchableOpacity>
+                              />
+                     </TouchableOpacity>
 
-                                </View>
+                 </View>
 
 
 
@@ -377,17 +385,19 @@ container: {
         alignItems: 'center'
     },
 sectionContainer: {
-      marginTop: 32,
+    /*flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',*/
+    marginTop: 32,
   },
   margin: {
-        marginTop: 32,
+        marginTop: 10,
     },
   scrollView: {
       backgroundColor: '#fff',
     },
 countdownStyle: {
-      paddingHorizontal: 20,
-      marginTop: 100
+      marginTop: 10
     },
     engine: {
       position: 'absolute',
@@ -400,9 +410,15 @@ countdownStyle: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 60,
+        marginTop: 20,
         paddingHorizontal: 30
       },
+      testContainer: {
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop:20
+            },
     sectionContainer: {
       marginTop: 32,
       paddingHorizontal: 24,

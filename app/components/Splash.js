@@ -19,86 +19,17 @@ import {HeaderBackButton} from 'react-navigation-stack';
 import LockerManager from './LockerManager';
 import RNPickerSelect from 'react-native-picker-select';
 import AsyncStorage from '@react-native-community/async-storage';
-
-//import { addItem } from '../services/ItemService';
+import LottieView from 'lottie-react-native';
 
 //import { Icon } from 'react-native-elements'
 
+/*
+var startpunkt = null;
+var destination = null;
+*/
+export default class Splash extends Component {
 
-
-let stations = [
-    {label: 'Amagerbro Torv',
-        value: 'Amagerbro Torv'},
-
-    {label: 'DTU – Anker Engelunds vej',
-        value: 'DTU – Anker Engelunds vej'},
-
-    {label: 'DTU – Rævehøj',
-        value: 'DTU – Rævehøj'},
-
-    {label: 'Flintholm Station',
-        value: 'Flintholm Station'},
-
-    {label: 'Glostrup',
-        value: 'Glostrup'},
-
-    {label: 'Hellerup Station',
-        value: 'Hellerup Station'},
-
-    {label: 'Hillerød Station',
-        value: 'Hillerød Station'},
-
-    {label: 'Høje Taastrup Station',
-        value: 'Høje Taastrup Station'},
-
-    {label: 'Islands Brygge',
-        value: 'Islands Brygge'},
-
-    {label: 'Jyllinge',
-        value: 'Jyllinge'},
-
-    {label: 'Køge Station',
-        value: 'Køge Station'},
-
-    {label: 'Ny Ellebjerg',
-        value: 'Ny Ellebjerg'},
-
-    {label: 'Nørrebro Station',
-        value: 'Nørrebro Station'},
-
-    {label: 'Nørreport Station',
-        value: 'Nørreport Station'},
-
-    {label: 'Roskilde Station',
-        value: 'Roskilde Station'},
-
-    {label: 'Ryparken Station',
-        value: 'Ryparken Station'},
-
-    {label: 'Valby Station',
-        value: 'Valby Station'},
-
-    {label: 'Vanløse Torv',
-        value: 'Vanløse Torv'},
-
-    {label: 'Vestamager Station',
-        value: 'Vestamager Station'},
-
-    {label: 'Vindinge',
-        value: 'Vindinge'},
-
-    {label: 'Ørestad Station',
-        value: 'Ørestad Station'},
-
-    {label: 'Østerport Station',
-        value: 'Østerport Station'},
-];
-
-export default class Home extends Component {
-
-static navigationOptions = ({navigation}) => {
-        return {
-
+    static navigationOptions = {
         headerShown: false,
         //title: '',
        // textAlign: 'center',
@@ -107,40 +38,50 @@ static navigationOptions = ({navigation}) => {
         //alignItems: 'center',
           //    justifyContent: 'center',
 
+    };
+/*
+    static navigationOptions = ({navigation}) => {
+        return {
+            title: 'Book pakke',
+            headerLeft: null,
+
         }
     };
-
+*/
     constructor(props) {
         super(props);
        /* this.state = {
             isLoaded: false,
              wasShown: false
         }*/
-        startpunkt = null;
-        destination = null;
+
 
 
     }
 
     componentDidMount(){
-/*
+
+    setTimeout(() => {
+
+
      try {
-
-
        AsyncStorage.getItem('key') // get key
             .then(wasShown => {
                 if(wasShown === null) { // first time
                   // we need to save key for the next time
                   AsyncStorage.setItem('key', '"true"')
+                  this.props.navigation.replace('Login')
                 }
                 else {
-                this.props.navigation.replace('Pickup')}
+                this.props.navigation.replace('Home')}
 
                 this.setState({isLoaded: true, wasShown})
+
              })
       } catch (e) {
              // saving error
-           }*/
+           }
+   },3000);
     }
 
     render() {
@@ -149,7 +90,7 @@ static navigationOptions = ({navigation}) => {
                      contentInsetAdjustmentBehavior="automatic"
                      style={styles.scrollView}>
                      <View style={styles.imageContainer}>
-                         <Image style={{width: 200, height: 50, justifyContent: 'center', alignItems: 'center'}}
+                         <Image style={{height: 50, width:200, justifyContent: 'center', alignItems: 'center'}}
 
                                    //source={{uri:'https://i.ibb.co/RcG9GNy/Crowd-Ship-logo.png'}}
                                    source={{uri:'https://imgur.com/9tdBDG0.png'}}
@@ -159,54 +100,29 @@ static navigationOptions = ({navigation}) => {
 
 
                     </View>
-                       <View style={styles.sectionContainer}>
-                         <Text style={styles.sectionTitle}>Fra</Text>
-                         < RNPickerSelect
-                             onValueChange={(value) => {startpunkt=value, console.log(startpunkt) }}
-                             style={pickerSelectStyles}
+                <View style={styles.imageContainer}>
+                     <LottieView
+                      style={{justifyContent: 'center', alignContent: 'center', height: 250
+                      }}
+                              source={require('../files/train_blue.json')}
+                              autoPlay
+                              loop
 
-                             items={stations}
-                             placeholder={ {label: 'Vælg startpunkt', value: null, color: '#9EA0A4' }}
-                         />
-                       </View>
-                       <View style={styles.sectionContainer}>
-                         <Text style={styles.sectionTitle}>Til</Text>
-                         <RNPickerSelect
-                               onValueChange={(value) => {destination=value, console.log(destination) }}
-                               style={pickerSelectStyles}
+                        />
+                </View>
 
-                               items={stations}
-                               placeholder={ {label: 'Vælg destination', value: null, color: '#9EA0A4'}}
-                           />
-                       </View>
+            <View style={styles.imageContainer}>
+                 <Image style={{height: 60, width: 220, justifyContent: 'center', alignItems: 'center', marginTop: 80}}
 
-
+                           //source={{uri:'https://i.ibb.co/RcG9GNy/Crowd-Ship-logo.png'}}
+                           source={{uri:'https://imgur.com/MgYZG17.png'}}
+                           //source={require('../files/loger_samlet.png')}
+                           //[url=https://[/img][/url]
+                           //source={{uri:'https://reactnative.dev/img/tiny_logo.png'}}
+                 />
 
 
-<View style = {styles.imageContainer}>
-    <TouchableOpacity onPress={() => {
-         if(startpunkt==null || destination==null || startpunkt==destination)
-             alert('Indtast venligst både Startpunkt og Destination. Bemærk disse må ikke være ens')
-         else
-             this.props.navigation.replace('Pickup', {startpunktVal: startpunkt, destinationVal: destination})}
-     }>
-        <Image
-            style={{width: 150, height: 150}}
-            source={{uri:'https://i.ibb.co/r3fGFrR/reserver.png'}}
-
-        />
-        </TouchableOpacity>
-
-
-        <Button
-        title="Finish"
-        onPress={() => {
-
-                     this.props.navigation.replace('Finish', {startpunktVal: startpunkt, destinationVal: destination})}
-             }
-        />
-
-         </View>
+            </View>
     </ScrollView>
         )
     }
@@ -239,6 +155,7 @@ const styles = StyleSheet.create({
   scrollView: {
       //backgroundColor: '#dae5f1',
       backgroundColor: '#fff',
+      flex: 1
     },
     myButton:{
         padding: 5,
@@ -263,6 +180,8 @@ const styles = StyleSheet.create({
     imageContainer: {
           marginTop: 32,
           paddingHorizontal: 24,
+          flex: 1,
+          justifyContent: 'center',
           alignItems: 'center',
         },
     sectionTitle: {
