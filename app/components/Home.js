@@ -123,24 +123,15 @@ static navigationOptions = ({navigation}) => {
     }
 
     componentDidMount(){
-/*
+    console.log('HOMEcomponentDidMount')
+
      try {
+            AsyncStorage.setItem('TESTVALUE', '3333')
+            console.log('settestvalue')
 
-
-       AsyncStorage.getItem('key') // get key
-            .then(wasShown => {
-                if(wasShown === null) { // first time
-                  // we need to save key for the next time
-                  AsyncStorage.setItem('key', '"true"')
-                }
-                else {
-                this.props.navigation.replace('Pickup')}
-
-                this.setState({isLoaded: true, wasShown})
-             })
       } catch (e) {
-             // saving error
-           }*/
+             console.log('Home async error')
+           }
     }
 
     render() {
@@ -187,8 +178,23 @@ static navigationOptions = ({navigation}) => {
     <TouchableOpacity onPress={() => {
          if(startpunkt==null || destination==null || startpunkt==destination)
              alert('Indtast venligst både Startpunkt og Destination. Bemærk disse må ikke være ens')
-         else
-             this.props.navigation.replace('Pickup', {startpunktVal: startpunkt, destinationVal: destination})}
+         else {
+             this.props.navigation.replace('Pickup', {startpunktVal: startpunkt, destinationVal: destination})
+             console.log('navigatetopickup')
+            try {
+                console.log('try to get TESTVALUE')
+                        let asyncval = AsyncStorage.getItem('TESTVALUE')
+                        if (asyncval !== null){
+                        console.log(asyncval)
+                        console.log('asyncval FOUND')}
+                        else {
+                        console.log('asyncval error 2')}
+
+                  } catch (e) {
+                         console.log('Pickup replace async error')
+                       }
+           }
+           }
      }>
         <Image
             style={{width: 150, height: 150}}
@@ -262,7 +268,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
           marginTop: 32,
-          paddingHorizontal: 24,
+
           alignItems: 'center',
         },
     sectionTitle: {

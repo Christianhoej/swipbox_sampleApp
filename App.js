@@ -37,37 +37,11 @@ const RootStack = createStackNavigator({
     Home: Home,
     Login: Login,
     Splash: Splash,
-
-
   },
   {
         initialRouteName: 'Splash',
-
-
-
   },
 );
-const RootStack2 = createStackNavigator({
-    Connection: Connection,
-    Operation: Operation,
-    Pickup: Pickup,
-    Closing: Closing,
-    Finish: Finish,
-    Deliver: Deliver,
-    Test: TestFunctions,
-    Home: Home,
-
-
-  },
-  {
-        initialRouteName: 'Home',
-
-
-
-  },
-);
-
-
 
 var backPressedOnce = false;
 
@@ -103,7 +77,6 @@ const MyTheme = {
 };
 
 const AppContainer = createAppContainer(RootStack);
-const AppContainer2 = createAppContainer(RootStack2);
 
 export default class App extends Component {
 

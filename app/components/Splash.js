@@ -61,27 +61,31 @@ export default class Splash extends Component {
 
     componentDidMount(){
 
-    setTimeout(() => {
+
 
 
      try {
-       AsyncStorage.getItem('key') // get key
+       AsyncStorage.getItem('key5') // get key
             .then(wasShown => {
                 if(wasShown === null) { // first time
                   // we need to save key for the next time
-                  AsyncStorage.setItem('key', '"true"')
+                  AsyncStorage.setItem('key5', '"true"')
+                  console.log(AsyncStorage.getItem('key5'))
+                  setTimeout(() => {
                   this.props.navigation.replace('Login')
+                  },3000);
                 }
                 else {
-                this.props.navigation.replace('Home')}
-
-                this.setState({isLoaded: true, wasShown})
+                    setTimeout(() => {
+                this.props.navigation.replace('Home')
+                    },3000);}
+                //this.setState({isLoaded: true, wasShown})
 
              })
       } catch (e) {
              // saving error
            }
-   },3000);
+
     }
 
     render() {

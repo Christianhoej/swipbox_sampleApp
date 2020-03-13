@@ -13,13 +13,20 @@ import {
     ActivityIndicator,
     Image,
     ImageBackground,
+    TouchableOpacity,
     color
 } from 'react-native';
 import {HeaderBackButton} from 'react-navigation-stack';
 import LockerManager from './LockerManager';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { db } from '../config';
 
+let addUser = user => {
+  db.ref('/users').push({
+    email: user
+  });
+};
 
 export default class Login extends Component {
 
@@ -36,29 +43,44 @@ export default class Login extends Component {
         super(props);
         this.state = {
                     isLoaded: false,
-                     wasShown: false
-                }
+                     wasShown: false,
 
+                };
+        userEmail=null;
+        userPassword=null;
     }
 
     componentDidMount() {
             console.log('componentDidMount');
-    try {
 
+       /*     AsyncStorage.getItem('key2') // get key
+                        .then(wasShown => {
+                            if(wasShown === null) { // first time
+                              // we need to save key for the next time
+                              AsyncStorage.setItem('key2', '"true"')
+                            }
 
-       AsyncStorage.getItem('key2') // get key
-            .then(wasShown => {
-                if(wasShown === null) { // first time
-                  // we need to save key for the next time
-                  AsyncStorage.setItem('key2', '"true"')
-                }
-
-                this.setState({isLoaded: true, wasShown})
-             })
-      } catch (e) {
-             console.log('LOGIN_ERROR')
-           }
+                            this.setState({isLoaded: true, wasShown})
+                         })
+                  } catch (e) {
+                         console.log('LOGIN_ERROR')
+                       }
+        */
     }
+
+    validate = (text) => {
+      console.log(text);
+      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (reg.test(text) === false) {
+        console.log("Email is Not Correct");
+        alert('Indtasten gyldig email')
+        return false;
+      }
+      else {
+        this.props.navigation.replace('Home')}
+        console.log("Email is Correct");
+        addUser(text);
+      }
 
 
 
@@ -71,23 +93,34 @@ export default class Login extends Component {
 
 
                    <View style={styles.sectionContainer}>
-                        <Text style={styles.sectionTitle}>Opret bruger</Text>
+                        <Text style={styles.sectionTitle}>Tilmelding</Text>
+                        <Text style={styles.sectionDescription}>Tilmeld dig Crowdship ved at indtaste din email herunder</Text>
+                        <Text style={styles.sectionDescription}></Text>
+
                        <TextInput
-                             style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                             onChangeText={text => onChangeText(text)}
+                             style={styles.textinputStyle}
+                             placeholder="Email"
+                             textContentType="emailAddress"
+                             onChangeText={(value) => userEmail=value}
                              //value={value}
                            />
-                       <TextInput
-                            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                            onChangeText={text => onChangeText(text)}
-                            //value={value}
-                          />
+
+
                  </View>
-                 <View style = {styles.button}>
-                         <Button
-                             title="Afslut"
-                               onPress={() => {this.props.navigation.replace('Home')}}
-                           />
+                 <View style = {styles.imageContainer}>
+                     <TouchableOpacity onPress={() => {
+                     this.validate(userEmail)
+                     /*if(userEmail==null){
+                        alert('Indtasten gyldig email')}
+                     else{
+                             this.props.navigation.replace('Home')}*/
+                             }
+                      }>
+                         <Image
+                             style={{width: 150, height: 150}}
+                             source={{uri:'https://i.ibb.co/k6C2KMJ/tilmeld.png'}}
+                         />
+                         </TouchableOpacity>
                          </View>
                </ScrollView>
 
@@ -109,9 +142,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    imageContainer: {
+              marginTop: 32,
+
+              alignItems: 'center',
+            },
     test: {
         marginTop: 16,
         backgroundColor: 'black'
+    },
+    textinputStyle: {
+        height: 40,
+        borderColor: '#00a3da',
+        borderWidth: 2,
+        marginTop: 30,
+        textAlign: 'center',
+        borderRadius: 20,
+
     },
 sectionContainer: {
       marginTop: 32,
@@ -123,7 +170,7 @@ sectionContainer: {
           resizeMode: 'cover'
       },
   scrollView: {
-      backgroundColor: '#dae5f1',
+      backgroundColor: '#fff',
 
     },
     engine: {
@@ -140,14 +187,17 @@ sectionContainer: {
     sectionTitle: {
       fontSize: 24,
       fontWeight: '600',
-      color: 'white',
+      color:'#00a3da',
       textAlign: 'center'
     },
     sectionDescription: {
       marginTop: 8,
       fontSize: 18,
-      fontWeight: '400',
-      color: 'white',
+      color: '#00a3da',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center'
     },
     highlight: {
       fontWeight: '700',
